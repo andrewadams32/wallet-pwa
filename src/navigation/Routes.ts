@@ -1,6 +1,6 @@
 import Screens from '../screens'
 
-type Route = {
+type Routes = {
     [key: string]: {
         component: React.FC<any>,
         path: string,
@@ -8,20 +8,15 @@ type Route = {
     }
 }
 
-const Routes: Route = {
+const Routes: Routes = {
     Home: {
         component: Screens.HomeScreen,
         path: '/home',
-        protected: true
+        protected: false
     },
     Login: {
         component: Screens.LoginScreen,
         path: '/login',
-        protected: false
-    },
-    NotFound: {
-        component: Screens.NotFound,
-        path: '',
         protected: false
     }
 }

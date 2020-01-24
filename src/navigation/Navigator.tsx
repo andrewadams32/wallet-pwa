@@ -3,31 +3,35 @@ import {
     BrowserRouter as Router,
     Route,
     Redirect,
-    Switch
+    Switch,
+    RouteComponentProps
 } from 'react-router-dom'
 
 import Routes from './Routes'
+import NotFound from '../screens/not-found'
 
-const Navigator: React.FC<any> = () => {
+const Navigator: React.FC = () => {
     return (
         <Router>
             <Switch>
-                {Object.keys(Routes).map((routeName, index)=>{
+                {Object.keys(Routes).map((routeName: string, index: number)=>{
                     const route = Routes[routeName]
-                    const Component = Routes[routeName].component
-                    if(routeName != "NotFound")
-                        return(
-                            route.protected ? 
-                            <PrivateRoute path={route.path} component={Component} key={index}/>
-                                :
-                            <Route path={route.path} key={index}>
-                                <Component/>
-                            </Route>
-                        )
+                    const Component = route.component
+                    return(
+                        route.protected ? 
+                        <PrivateRoute path={route.path} component={Component} key={index}/>
+                            :
+                        <Route path={route.path} key={index} render={(props: RouteComponentProps<any>)=>(
+                            <Component {...props}/>
+                        )}/>
+                    )
                 })}
-                <Route>
-                    {Routes["NotFound"].component}
-                </Route>
+                <Route exact path="/" render={(props: RouteComponentProps<any>)=>(
+                    <Redirect {...props} to={{pathname: '/home', state: {from: props.location}}}/>
+                )}/>
+                <Route render={(props: RouteComponentProps<any>)=>(
+                    <NotFound {...props}/>
+                )}/>
             </Switch>
         </Router>
     )
@@ -38,16 +42,12 @@ type routeProps = {
     [key: string]: any
 }
 const PrivateRoute = ({ component: Component, ...rest }: routeProps) => (
-    <Route {...rest}>
-        {false ?  // auth service here
-            <Component />
-                :
-            <Redirect to={{
-                pathname: '/',
-                state: { from: rest.location }
-            }}/>
-        }
-    </Route>
+    <Route {...rest} render={(props: RouteComponentProps<any>) => (
+        true ? 
+            (<Component {...props}/>)
+        :
+            (<Redirect to={{pathname: '/home', state: {from: props.location}}}/>)
+    )}/>
 )
 
 export default Navigator

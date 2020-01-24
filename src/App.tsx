@@ -5,7 +5,7 @@ import Navigator from './navigation/Navigator'
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <div style={{height: "100%"}} className="App">
       <Navigator />
     </div>
   );
