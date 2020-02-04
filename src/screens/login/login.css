@@ -1,0 +1,11 @@
+.main-container {
+  height:100vh !important;
+  overflow: hidden;
+}
+
+.btn-submit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}

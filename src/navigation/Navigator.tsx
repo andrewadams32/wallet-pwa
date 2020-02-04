@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-    BrowserRouter as Router,
     Route,
     Redirect,
     Switch,
@@ -12,7 +11,6 @@ import NotFound from '../screens/not-found'
 
 const Navigator: React.FC = () => {
     return (
-        <Router>
             <Switch>
                 {Object.keys(Routes).map((routeName: string, index: number)=>{
                     const route = Routes[routeName]
@@ -33,7 +31,6 @@ const Navigator: React.FC = () => {
                     <NotFound {...props}/>
                 )}/>
             </Switch>
-        </Router>
     )
 }
 
