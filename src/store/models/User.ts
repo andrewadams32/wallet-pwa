@@ -42,7 +42,7 @@ const UserModel: UserSchema = {
     if (loggedIn) actions.setLoggedIn(true)
   }),
   logout: thunk(async actions => {
-    auth.logout()
+    await auth.logout()
     actions.setLoggedIn(false)  
   }),
   //listeners

@@ -1,8 +1,6 @@
 import React, { lazy } from 'react'
 
-const Home = lazy(()=>import('../screens/home'))
-const Login = lazy(()=>import('../screens/login'))
-
+import Screens from '../screens'
 type Route = {
   component: React.FC<any>,
   path: string,
@@ -11,12 +9,12 @@ type Route = {
 
 const Routes: Route[] = [
   {
-    component: Home,
+    component: Screens.HomeScreen,
     path: '/home',
     locked: true
   },
   {
-    component: Login,
+    component: Screens.LoginScreen,
     path: '/login',
     locked: false
   }

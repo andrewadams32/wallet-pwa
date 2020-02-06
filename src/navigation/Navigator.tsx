@@ -9,6 +9,8 @@ import {
 import { useStoreRehydrated } from 'easy-peasy'
 import { useStoreState, useStoreActions } from '../hooks/TypedState'
 
+import NavBar from './NavBar'
+
 import Routes from './Routes'
 import NotFound from '../screens/not-found'
 
@@ -17,7 +19,7 @@ const Navigator: React.FC = () => {
   const User = useStoreState(({ User }) => User)
   const setLoggedIn = useStoreActions(({ User }) => User.setLoggedIn)
   const history = useHistory()
-  const showNav = useMemo(() => (history.location.pathname !== '/login'), [history])
+  const showNav = useMemo(() => (history.location.pathname !== '/login'), [history.location.pathname])
 
   useEffect(() => {
     if (rehydrated)
@@ -26,27 +28,27 @@ const Navigator: React.FC = () => {
           setLoggedIn(false)
   }, [rehydrated, User.authExpireTime, setLoggedIn])
 
-  return rehydrated ? (
-    <Suspense fallback={<div>suspensing...</div>}>
-      <Switch>
-        {Routes.map(({ component: Component, locked, path }, index: number) => {
-          return (
-            locked ?
-              <PrivateRoute exact path={path} Component={Component} key={index} loggedIn={User.loggedIn} />
-              :
-              <Route path={path} key={index} render={(props: RouteComponentProps<any>) => (
-                <Component {...props} />
-              )} />
-          )
-        })}
-        <Route exact path="/" render={(props: RouteComponentProps<any>) => (
-          <Redirect {...props} to='/home' />
-        )} />
-        <Route render={(props: RouteComponentProps<any>) => (
-          <NotFound {...props} />
-        )} />
-      </Switch>
-    </Suspense>
+  return rehydrated ? (<>
+    {showNav && <NavBar routeName={history.location.pathname} />}
+    <Switch>
+      {Routes.map(({ component: Component, locked, path }, index: number) => {
+        return (
+          locked ?
+            <PrivateRoute exact path={path} Component={Component} key={index} loggedIn={User.loggedIn} />
+            :
+            <Route path={path} key={index} render={(props: RouteComponentProps<any>) => (
+              <Component {...props} />
+            )} />
+        )
+      })}
+      <Route exact path="/" render={(props: RouteComponentProps<any>) => (
+        <Redirect {...props} to='/home' />
+      )} />
+      <Route render={(props: RouteComponentProps<any>) => (
+        <NotFound {...props} />
+      )} />
+    </Switch>
+  </>
   ) : <div>loading state...</div> // this will be a loading screen while state rehydrates
 }
 
@@ -58,9 +60,9 @@ type routeProps = {
 const PrivateRoute = ({ Component, loggedIn, ...rest }: routeProps) => (
   <Route {...rest} render={(props: RouteComponentProps<any>) => (
     loggedIn ?
-      (<Component {...props} />)
+      <Component {...props} />
       :
-      (<Redirect to='/login' />)
+      <Redirect to='/login' />
   )} />
 )
 

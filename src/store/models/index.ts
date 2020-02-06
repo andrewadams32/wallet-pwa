@@ -1,14 +1,17 @@
-import CertificateModel, { CertificateSchema } from "./Certificate";
+import CertificatesModel, { CertificatesSchema } from "./Certificates";
 import UserModel, { UserSchema } from "./User";
+import IssuerModel, { IssuersSchema } from "./Issuers";
 
 export interface StoreSchema {
   User: UserSchema;
-  Certificate: CertificateSchema;
+  Certificate: CertificatesSchema;
+  Issuer: IssuersSchema
 }
 
 const StoreModel: StoreSchema = {
   User: UserModel,
-  Certificate: CertificateModel
+  Certificate: CertificatesModel,
+  Issuer: IssuerModel
 };
 
 export default StoreModel;
