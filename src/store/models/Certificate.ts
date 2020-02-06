@@ -1,11 +1,11 @@
 export interface CertificateSchema {
   name: string;
-  address: string;
+  blockchainAddress: string;
 }
 
 const CertificateModel: CertificateSchema = {
   name: "",
-  address: ""
+  blockchainAddress: ""
 };
 
 export default CertificateModel;

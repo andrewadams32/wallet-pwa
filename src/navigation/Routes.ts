@@ -1,24 +1,25 @@
-import Screens from '../screens'
+import React, { lazy } from 'react'
 
-type Routes = {
-    [key: string]: {
-        component: React.FC<any>,
-        path: string,
-        protected: boolean
-    }
+const Home = lazy(()=>import('../screens/home'))
+const Login = lazy(()=>import('../screens/login'))
+
+type Route = {
+  component: React.FC<any>,
+  path: string,
+  locked: boolean
 }
 
-const Routes: Routes = {
-    Home: {
-        component: Screens.HomeScreen,
-        path: '/home',
-        protected: false
-    },
-    Login: {
-        component: Screens.LoginScreen,
-        path: '/login',
-        protected: false
-    }
-}
+const Routes: Route[] = [
+  {
+    component: Home,
+    path: '/home',
+    locked: true
+  },
+  {
+    component: Login,
+    path: '/login',
+    locked: false
+  }
+]
 
 export default Routes
