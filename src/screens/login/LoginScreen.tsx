@@ -32,7 +32,7 @@ const LoginScreen: React.FC = () => {
   const classes = useStyles()
   
   useEffect(()=>{
-    setLoggedIn(false)
+    setLoggedIn({value: false, roles: []})
   },[])
 
   useEffect(()=>{

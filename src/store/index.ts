@@ -1,11 +1,9 @@
-import { createStore, persist } from 'easy-peasy'
-import * as localforage from 'localforage'
+import { createStore } from 'easy-peasy'
 
 import StoreModel from './models'
 
-const store = createStore(persist(StoreModel, {
-  mergeStrategy: 'mergeDeep',
-  storage: localforage
-}));
+const store = createStore(StoreModel, {
+  name: "Pathways-Store"
+});
 
 export default store

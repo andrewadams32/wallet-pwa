@@ -1,22 +1,29 @@
-import { Computed, computed } from "easy-peasy";
+import { Computed, computed, persist } from "easy-peasy";
+import * as localforage from 'localforage'
 
 export interface Issuer {
-  name: string;
+  id: string
+  name: string
+  email: string
+  url: string
 }
 export interface IssuersSchema {
   issuers: Issuer[];
-  totalIssuers: number;
+  totalIssuers: Computed<IssuersSchema>;
   getIssuer: Computed<IssuersSchema, (id: string) => Issuer | null>;
 }
 
-const IssuerModel: IssuersSchema = {
+const IssuerModel: IssuersSchema = persist({
   issuers: [],
-  totalIssuers: 0,
+  totalIssuers: computed((state)=>state.issuers.length),
   getIssuer: computed(state => (id: string) => {
     let res = state.issuers.find(issuer => issuer.name === id);
     if (res) return res;
     else return null;
   })
-};
+}, {
+  mergeStrategy: 'mergeDeep',
+  storage: localforage
+});
 
 export default IssuerModel;

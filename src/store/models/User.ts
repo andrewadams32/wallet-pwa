@@ -1,50 +1,46 @@
-import { Action, action, ActionOn, actionOn, Thunk, thunk } from "easy-peasy";
+import { Action, action, Thunk, thunk, persist } from "easy-peasy";
 
 import auth from '../../api/authentication'
 import { StoreSchema } from "./";
+import * as localforage from 'localforage'
 
-const TIME_TO_EXPIRE = 1000 * 60 * 60 * 24
+export type role = "admin" | "issuer" | "issuer-organization" | "recipient" | "any"
 
 export interface UserSchema {
   email: string
   loggedIn: boolean
-  loggedInTime?: number
-  authExpireTime?: number
+  roles: role[]
   setEmail: Action<UserSchema, string>
-  setLoggedIn: Action<UserSchema, boolean>
+  setLoggedIn: Action<UserSchema, {value: boolean, roles: role[]}>
   login: Thunk<UserSchema, string, void, StoreSchema>
   logout: Thunk<UserSchema>
 }
-const UserModel: UserSchema = {
+const UserModel: UserSchema = persist({
   //values
   email: "",
+  roles: [],
   loggedIn: false,
   //actions
   setEmail: action((store, payload) => {
     store.email = payload;
   }),
-  setLoggedIn: action((store, payload) => {
-    if(payload){ // login
-      let now = new Date().getTime()
-      store.loggedInTime = now
-      store.authExpireTime = now + TIME_TO_EXPIRE
-    } else { // logout
-      store.email = ""
-      store.loggedInTime = undefined
-      store.authExpireTime = undefined
-    }
-    store.loggedIn = payload;
+  setLoggedIn: action((user, payload) => {
+    user.loggedIn = payload.value;
+    user.roles = payload.roles
   }),
   //thunks
   login: thunk(async (actions, password, { getStoreState }) => {
     const { User } = getStoreState();
     const loggedIn = await auth.login(User.email, password)
-    if (loggedIn) actions.setLoggedIn(true)
+    if (loggedIn) actions.setLoggedIn({value: true, roles: ["recipient"]})
   }),
   logout: thunk(async actions => {
     await auth.logout()
-    actions.setLoggedIn(false)  
+    actions.setLoggedIn({value: false, roles: []})  
   }),
   //listeners
-};
+}, {
+  mergeStrategy: "mergeDeep",
+  storage: localforage,
+});
 export default UserModel;

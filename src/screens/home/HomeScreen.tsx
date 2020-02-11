@@ -1,11 +1,20 @@
-import React from 'react'
-import { useStoreState } from '../../hooks/TypedState'
+import React, { useState } from 'react'
+import { useStoreState, useStoreActions } from '../../hooks/TypedState'
 
 const HomeScreen: React.FC = (props) => {
-  console.log('in home screen', props)
-  const getCert = useStoreState((state)=>state.Certificate.getCertificate)('123')
+  const [id, setId] = useState("")
+  const { getCertificate } = useStoreState(({Certificates})=>Certificates)
+  const { addCertificate } = useStoreActions(({Certificates})=>Certificates)
+  const cert = getCertificate(id)
   return (
-    <div>home</div>
+    <div>
+      <p>home</p>
+      <button onClick={()=>addCertificate({certInfo: {id: '123'}})}>add cert</button>
+      <button onClick={()=>setId("123")}>get cert</button>
+      { cert && 
+        <p>{cert.certInfo.id}</p>
+      }
+    </div>
   )
 }
 
