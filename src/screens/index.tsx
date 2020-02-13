@@ -1,9 +1,18 @@
-import HomeScreen from './home'
-import LoginScreen from './login'
-import NotFound from './not-found'
+import LoginScreen from './shared/login'
+import NotFound from './shared/not-found'
 
-export default {
-    HomeScreen,
-    LoginScreen,
-    NotFound
+import recipient from './recipient'
+import admin from './admin'
+
+export const RecipientScreens = {
+    ...recipient
+}
+
+export const AdminScreens = {
+  ...admin
+}
+
+export const SharedScreens = {
+  LoginScreen,
+  NotFound
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox, makeStyles } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 
-import { useStoreState, useStoreActions } from '../../hooks/TypedState'
+import { useStoreState, useStoreActions } from '../../../hooks/TypedState'
 
 const useStyles = makeStyles((theme)=>({
     padding: {
@@ -36,8 +36,9 @@ const LoginScreen: React.FC = () => {
   },[])
 
   useEffect(()=>{
-    if(loggedIn)
+    if(loggedIn){
       history.push('/home')
+    }
   }, [loggedIn, history])
 
   return (

@@ -1,7 +1,8 @@
 import React, { lazy } from 'react'
-
-import Screens from '../screens'
 import { role } from '../store/models/User'
+
+import { RecipientScreens, SharedScreens, AdminScreens } from '../screens/index'
+
 
 type Route = {
   component: React.FC<any>,
@@ -12,16 +13,22 @@ type Route = {
 
 const Routes: Route[] = [
   {
-    component: Screens.HomeScreen,
+    component: RecipientScreens.HomeScreen,
     path: '/home',
     locked: true,
-    rolesAccepted: ["any"]
+    rolesAccepted: ["recipient"]
   },
   {
-    component: Screens.LoginScreen,
+    component: SharedScreens.LoginScreen,
     path: '/login',
     locked: false,
     rolesAccepted: ["any"]
+  },
+  {
+    component: AdminScreens.AdminHome,
+    path: '/admin',
+    locked: true,
+    rolesAccepted: ["admin"]
   }
 ]
 

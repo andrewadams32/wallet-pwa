@@ -1,11 +1,16 @@
+import { role } from '../store/models/User'
+
 async function stall(stallTime = 500) {
   await new Promise(resolve => setTimeout(resolve, stallTime));
 }
 
 export default {
-  login: async (email: string, password: string): Promise<boolean> => {
+  login: async (email: string, password: string): Promise<{loggedIn: boolean, roles: role[]}> => {
     await stall()
-    return email === password
+    return {
+      loggedIn: email === password,
+      roles: ["admin"]
+    }
   },
   logout: async (): Promise<void> => {
     await stall()

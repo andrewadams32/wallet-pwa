@@ -31,12 +31,12 @@ const UserModel: UserSchema = persist({
   //thunks
   login: thunk(async (actions, password, { getStoreState }) => {
     const { User } = getStoreState();
-    const loggedIn = await auth.login(User.email, password)
-    if (loggedIn) actions.setLoggedIn({value: true, roles: ["recipient"]})
+    const {loggedIn, roles} = await auth.login(User.email, password)
+    if (loggedIn) actions.setLoggedIn({value: true, roles: roles})
   }),
   logout: thunk(async actions => {
     await auth.logout()
-    actions.setLoggedIn({value: false, roles: []})  
+    actions.setLoggedIn({value: false, roles: []})
   }),
   //listeners
 }, {
