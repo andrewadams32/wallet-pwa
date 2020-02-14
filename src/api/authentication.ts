@@ -9,7 +9,7 @@ export default {
     await stall()
     return {
       loggedIn: email === password,
-      roles: ["admin"]
+      roles: ["recipient"]
     }
   },
   logout: async (): Promise<void> => {

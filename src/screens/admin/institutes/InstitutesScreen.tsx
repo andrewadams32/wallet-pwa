@@ -2,9 +2,12 @@ import React from 'react'
 import { Button, Typography, makeStyles } from '@material-ui/core'
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
 
+import { useHistory } from 'react-router-dom'
+
 import Screen from '../../../components/Screen'
 import InfoBox from '../../../components/InfoBox'
-import { useHistory } from 'react-router-dom'
+import Label from './../../../components/Label';
+import { colors } from '../../../config/theme'
 
 const OptionItem: React.FC = ({children}) => {
   return(
@@ -19,7 +22,7 @@ const useStyles = makeStyles((theme)=>({
     color: "white",
     border: ".1px solid grey",
     borderLeft: 0, borderRight: 0,
-    backgroundColor: "rgb(40,40,40)",
+    backgroundColor: colors.lightGrey,
     display: "flex",
     justifyContent: "space-between",
     alignItems: 'center',
@@ -40,9 +43,7 @@ const InstitutesScreen = () => {
   const history = useHistory()
   return(
     <Screen>
-      <Typography style={{marginLeft: "1rem", color: "rgba(255,255,255,.5)", marginBottom: ".5rem"}}>
-        Existing Institutes
-      </Typography>
+      <Label content="Existing Institutes"/>
       <InfoBox className={classes.option} style={{height: "2rem", textTransform: "capitalize"}} onClick={()=>history.push("/admin")} as={Button}>
         <Typography>
           California State University, Fresno

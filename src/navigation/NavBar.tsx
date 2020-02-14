@@ -6,6 +6,8 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useStoreActions, useStoreState } from '../hooks/TypedState'
 import { useHistory, useLocation } from 'react-router-dom';
 
+import {colors} from '../config/theme'
+
 const useStyles = makeStyles((theme)=>(
   createStyles({
     title: {
@@ -15,7 +17,7 @@ const useStyles = makeStyles((theme)=>(
     },
     appBar: {
       padding: '.5rem',
-      backgroundColor: 'rgb(40,40,40)'
+      backgroundColor: colors.lightGrey
     },
     upper: {
       display: 'flex',
@@ -34,24 +36,13 @@ type NavProps = {
   routeName: string
   style: React.CSSProperties
 }
-const NavBar: React.FC<NavProps> = ({ routeName, style }) => {
+const NavBar: React.FC<NavProps> = ({ style }) => {
   const classes = useStyles()
   const logout = useStoreActions(({User})=>User.logout)
   const user = useStoreState(({User})=>User)
+  const Title = useStoreState(({Application})=>Application.title)
   const history = useHistory()
   const location = useLocation()
-
-  const screenName = useMemo(() => {
-    switch (routeName) {
-      case '/home': return "Pathway"
-      case '/home/certificates': return "Certificates"
-      case '/home/pathways': return "Pathways"
-      case '/home/ai': return "AI"
-      case '/admin/home': return "Menu"
-      case '/admin/institutes': return "Manage Institutes"
-      default: return ""
-    }
-  }, [routeName])
 
   const LeftButton: React.FC = useMemo(()=>{
     if(user.roles.includes("admin") && !location.pathname.includes("home")){
@@ -81,7 +72,7 @@ const NavBar: React.FC<NavProps> = ({ routeName, style }) => {
       </div>
       <Toolbar style={{paddingLeft: 0}}>
         <Typography variant="h4" className={classes.title}>
-          {screenName}
+          {Title}
         </Typography>
       </Toolbar>
     </AppBar>

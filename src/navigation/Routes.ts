@@ -29,6 +29,12 @@ const Routes: Route[] = [
     path: '/admin',
     locked: true,
     rolesAccepted: ["admin"]
+  },
+  {
+    component: RecipientScreens.CertificateView,
+    path: '/certificate/:certID',
+    locked: true,
+    rolesAccepted: ["recipient"]
   }
 ]
 

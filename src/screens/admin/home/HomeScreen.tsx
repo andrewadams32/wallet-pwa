@@ -4,11 +4,12 @@ import { makeStyles, Typography, Button } from '@material-ui/core'
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
 import { useHistory } from 'react-router-dom'
 import Screen from '../../../components/Screen'
+import { colors } from '../../../config/theme'
 
 const useStyles = makeStyles((theme)=>({
   screen: {
     height: '100%', width: "100%",
-    backgroundColor: 'rgba(0,0,0,.9)',
+    backgroundColor: colors.screenColor,
     overflowY: 'scroll',
     paddingTop: theme.spacing(2)
   },
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme)=>({
     color: "white",
     border: ".1px solid grey",
     borderLeft: 0, borderRight: 0,
-    backgroundColor: "rgb(40,40,40)",
+    backgroundColor: colors.lightGrey,
     display: "flex",
     justifyContent: "space-between",
     alignItems: 'center',

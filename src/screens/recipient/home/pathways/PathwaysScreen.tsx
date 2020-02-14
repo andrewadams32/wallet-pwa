@@ -1,12 +1,22 @@
 import React, { useState } from 'react'
-import { BottomNavigation, BottomNavigationAction, makeStyles, createStyles } from '@material-ui/core'
-import { Route, useHistory } from 'react-router-dom'
+import { Route, useHistory, Switch } from 'react-router-dom'
 
-import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+import Pathway from './Pathway'
+import useTitle from '../../../../hooks/useTitle'
 
 const PathwaysScreen: React.FC = (props) => {
+  useTitle("Pathways")
   return (
-    <div>pathways screen </div>
+    <>
+    <Switch>
+      <Route exact path="/home/pathways/:pathwayID">
+        <Pathway />
+      </Route>
+      <Route>
+        <p>testin 321</p>
+      </Route>
+    </Switch>
+    </>
   )
 }
 

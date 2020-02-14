@@ -1,15 +1,13 @@
-import { Computed, computed, Action, action, persist } from "easy-peasy";
-import * as localforage from 'localforage'
+import { Action, action } from "easy-peasy";
 
 export interface ApplicationSchema {
-  lastRoute: string
+  title: string
+  setTitle: Action<ApplicationSchema, string>
 }
 
-const AplicationModel: ApplicationSchema = persist({
-  lastRoute: ""
-}, {
-  mergeStrategy: 'mergeDeep',
-  storage: localforage
-});
+const AplicationModel: ApplicationSchema = {
+  title: "",
+  setTitle: action((state, payload)=>{state.title = payload})
+};
 
 export default AplicationModel;

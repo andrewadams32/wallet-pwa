@@ -2,15 +2,16 @@ import { Computed, computed, Action, action, persist } from "easy-peasy";
 import * as localforage from 'localforage'
 
 export interface Certificate {
-	certInfo: Partial<{
-		id: string
+	certInfo: {
+    id: string
+    title: string,
 		img: string
 		narrative: string
 		description: string
 		signatures: string[] // signature
 		completedOn?: Date
 		issuerName: string
-  }>,
+  },
   requirements: {
     required: boolean
     sequence: boolean
@@ -28,11 +29,12 @@ export interface CertificatesSchema {
 const blankCert: Certificate = {
   certInfo: {
     description: "",
+    title: "",
     id: "",
     narrative: "",
     img: "",
     issuerName: "",
-    signatures: [],
+    signatures: []
   },
   requirements: {
     elective: false,

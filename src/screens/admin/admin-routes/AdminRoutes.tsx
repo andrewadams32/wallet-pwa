@@ -15,6 +15,9 @@ const AdminRoutes: React.FC = () => {
       <Route exact path="/admin">
         <Redirect to="/admin/home"/>
       </Route>
+      <Route>
+        <div>404 not found</div>
+      </Route>
     </Switch>
   )
 }

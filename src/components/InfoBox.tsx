@@ -1,11 +1,13 @@
 import React from 'react'
 import { makeStyles, Box } from '@material-ui/core'
 
+import { colors } from '../config/theme'
+
 const useStyles = makeStyles((theme)=>({
   infoBox: {
     height: '2rem',
     color: 'rgba(255, 255, 255, .3)',
-    backgroundColor: 'rgb(30,30,30)',
+    backgroundColor: colors.darkerGrey,
     margin: 0,
     padding: '.3rem'
   }

@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { BottomNavigation, BottomNavigationAction, makeStyles, createStyles } from '@material-ui/core'
-import { Route, useHistory, Switch, Redirect } from 'react-router-dom'
+import { Route, useHistory, useLocation, Switch, Redirect } from 'react-router-dom'
 
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 
 import CertificateScreen from './certificates/CertificatesScreen'
 import PathwaysScreen from './pathways/PathwaysScreen';
 import AIScreen from './ai/AIScreen';
+import CertificateView from './certificates/CertificateView'
 
 const useStyles = makeStyles((theme)=>(
   createStyles({
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme)=>(
 
 const HomeScreen: React.FC = (props) => {
   const history = useHistory()
+  const location = useLocation()
   const classes = useStyles()
 
   return (
@@ -36,10 +38,10 @@ const HomeScreen: React.FC = (props) => {
           <Route exact path="/home/ai">
             <AIScreen/>
           </Route>
-          <Route exact path="/home/pathways">
+          <Route path="/home/pathways">
             <PathwaysScreen/>
           </Route>
-          <Route exact path="/home">
+          <Route path="/home">
             <Redirect to="/home/pathways"/>
           </Route>
           <Route>
@@ -59,9 +61,9 @@ const HomeScreen: React.FC = (props) => {
           }
         }}
       >
-        <BottomNavigationAction label="Certificates" icon={<VerifiedUserIcon htmlColor={history.location.pathname==="/home/certificates" ? 'red' : 'grey'} fontSize='large'/>} />
-        <BottomNavigationAction label="Pathways" icon={<VerifiedUserIcon htmlColor={history.location.pathname==="/home/pathways" ? 'red' : 'grey'} fontSize='large'/>} />
-        <BottomNavigationAction label="AI" icon={<VerifiedUserIcon htmlColor={history.location.pathname==="/home/ai" ? 'red' : 'grey'} fontSize='large'/>} />
+        <BottomNavigationAction label="Certificates" style={{color: "white"}} icon={<VerifiedUserIcon htmlColor={location.pathname==="/home/certificates" ? 'red' : 'grey'} fontSize='large'/>} />
+        <BottomNavigationAction label="Pathways" style={{color: "white"}} icon={<VerifiedUserIcon htmlColor={location.pathname==="/home/pathways" ? 'red' : 'grey'} fontSize='large'/>} />
+        <BottomNavigationAction label="AI" style={{color: "white"}} icon={<VerifiedUserIcon htmlColor={location.pathname==="/home/ai" ? 'red' : 'grey'} fontSize='large'/>} />
       </BottomNavigation>
     </div>
   )
